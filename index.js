@@ -38,13 +38,18 @@ app.post('/signin', validate(Signin), async (req, res) => {
   }
 })
 
+const testuser = {
+  user: 'admin',
+  pass: 'supersecretpassword'
+}
+
 const basic = new BasicStrategy((user, pass, done) => {
   console.log("basic:", user, pass)
-  done(null, {})
+  done(null, testuser)
 })
 const bearer = new BearerStrategy((token, done) => {
   console.log("bearer:", token)
-  done(null, {})
+  done(null, testuser)
 })
 passport.use(basic)
 passport.use(bearer)
