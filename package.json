@@ -1,0 +1,28 @@
+{
+  "name": "learn-express",
+  "version": "1.0.0",
+  "description": "learn express with resume API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/midbel/learn-express.git"
+  },
+  "author": "midbel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/midbel/learn-express/issues"
+  },
+  "homepage": "https://github.com/midbel/learn-express#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "joi": "^17.6.0",
+    "passport": "^0.5.2",
+    "passport-http": "^0.3.0",
+    "passport-http-bearer": "^1.0.1",
+    "sqlite3": "^5.0.2"
+  }
+}
