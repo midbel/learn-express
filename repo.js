@@ -4,6 +4,7 @@ const db = new sqlite3.Database('data/test.db')
 exports.authenticate = (email, passwd) => {
   return new Promise((resolve, reject) => {
     db.get("select * from profiles where email=:email", email, (err, row) => {
+      console.log(email, passwd, err, row)
       if (err || row === undefined) {
         reject(err)
         return

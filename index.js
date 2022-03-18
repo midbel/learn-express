@@ -1,29 +1,17 @@
 const express = require('express')
 const cors = require('cors')
-const Joi = require('joi')
 const repo = require('./repo.js')
 const passport = require('passport')
+const { validate } = require('./middlewares.js')
+const { Signin } = require('./schema.js')
+const jwt = require("./token.js")
 const BasicStrategy = require('passport-http').BasicStrategy
 const BearerStrategy = require('passport-http-bearer').Strategy
 
 const app = express()
 const port = 3001
 
-const Signin = Joi.object().keys({
-  email: Joi.string().email().required(),
-  pass: Joi.string().min(6).required(),
-})
-
-function validate(schema) {
-  return (req, res, next) => {
-    try {
-      Joi.attempt(req.body, schema)
-      next()
-    } catch(error) {
-      res.status(400).json("invalid data supplied")
-    }
-  }
-}
+const secretkey = "supersecretkey"
 
 
 app.use(express.json())
@@ -32,7 +20,11 @@ app.use(cors())
 app.post('/signin', validate(Signin), async (req, res) => {
   try {
     const item = await repo.authenticate(req.body.email, req.body.pass)
-    res.status(200).json(item)
+    const data = {
+      item,
+      token: jwt.generate(item, secretkey)
+    }
+    res.status(200).json(data)
   } catch(err) {
     res.status(401).json('bad credential provided')
   }
@@ -44,13 +36,22 @@ const testuser = {
 }
 
 const basic = new BasicStrategy((user, pass, done) => {
-  console.log("basic:", user, pass)
-  done(null, testuser)
+  if (user === testuser.user && pass === testuser.pass) {
+    done(null, testuser)
+    return
+  }
+  done(new Error("invalid credentials provided"))
 })
+
 const bearer = new BearerStrategy((token, done) => {
-  console.log("bearer:", token)
-  done(null, testuser)
+  try {
+    const data = jwt.verify(token, secretkey)
+    done(null, data)
+  } catch(err) {
+    done("invalid token provided")
+  }
 })
+
 passport.use(basic)
 passport.use(bearer)
 
