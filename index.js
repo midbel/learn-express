@@ -63,7 +63,7 @@ profile.get('/:id', async (req, res) => {
     const item = await repo.getProfile(req.params.id)
     res.status(200).json(item)
   } catch(err) {
-    res.status(404).send(err.toString())
+    res.status(404).send('profile not found')
   }
 })
 
