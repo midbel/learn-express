@@ -38,7 +38,7 @@ exports.getProfile = async (id) => {
     careers,
     educations,
     technicals,
-    languages,
+    languages
   };
 };
 

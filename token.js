@@ -4,13 +4,13 @@ exports.generate = function (payload, secret) {
   const jid = new Date();
   return jwt.sign(
     {
-      data: payload,
+      data: payload
     },
     secret,
     {
       expiresIn: '1h',
       issuer: 'learn-express',
-      jwtid: jid.getTime().toString(),
+      jwtid: jid.getTime().toString()
     }
   );
 };

@@ -16,7 +16,7 @@ exports.validate = function (schema) {
 
 const testuser = {
   user: 'admin',
-  pass: 'supersecretpassword',
+  pass: 'supersecretpassword'
 };
 
 exports.basic = new BasicStrategy((user, pass, done) => {

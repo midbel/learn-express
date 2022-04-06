@@ -19,7 +19,7 @@ app.post('/signin', validate(Signin), async (req, res) => {
     const item = await repo.authenticate(req.body.email, req.body.pass);
     const data = {
       item,
-      token: jwt.generate(item, secretkey),
+      token: jwt.generate(item, secretkey)
     };
     res.status(200).json(data);
   } catch (err) {
