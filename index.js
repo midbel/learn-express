@@ -1,3 +1,3 @@
-const { run } = require('./rest.js')
+const { run } = require('./rest.js');
 
-run()
+run();
